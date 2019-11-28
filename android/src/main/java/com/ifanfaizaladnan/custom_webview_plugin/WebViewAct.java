@@ -1,8 +1,11 @@
 package com.ifanfaizaladnan.custom_webview_plugin;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
@@ -14,7 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class WebViewAct extends Activity {
-    private WebView mWebView;
+    public WebView mWebView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,20 +29,23 @@ public class WebViewAct extends Activity {
         WebSettings webSettings = mWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
 
-        mWebView.setWebViewClient(new WebViewClient() {
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                super.onPageFinished(mWebView, url);
-            }
-
-            @Override
-            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-                Toast.makeText(getApplicationContext(), "Oh no! " + description, Toast.LENGTH_SHORT).show();
-            }
-        });
-
         mWebView.addJavascriptInterface(new WebViewJavaScriptInterface(this), "Toaster");
         mWebView.loadUrl("https://smart-gps-e22ab.web.app/");
+    }
+
+    @TargetApi(Build.VERSION_CODES.KITKAT)
+    public void evaluateJavaScript(String jsString) {
+        if (jsString == null) {
+            throw new UnsupportedOperationException("JavaScript string cannot be null");
+        }
+        mWebView.evaluateJavascript(
+            jsString,
+            new android.webkit.ValueCallback<String>() {
+                @Override
+                public void onReceiveValue(String value) {
+                    Log.d("WebView", value);
+                }
+            });
     }
 
     public class WebViewJavaScriptInterface{
