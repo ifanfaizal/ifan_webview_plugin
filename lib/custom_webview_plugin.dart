@@ -11,7 +11,18 @@ class CustomWebviewPlugin {
     return version;
   }
 
-  static Future startWebView() async {
-    await _channel.invokeMethod('startWebView');
+  static Future startWebView(String url) async {
+    _channel.setMethodCallHandler(_handler);
+    await _channel.invokeMethod('startWebView', url);
+  }
+
+  static Future<dynamic> _handler(MethodCall call) {
+    switch (call.method) {
+      case 'onPageFinished':
+        print(call.arguments);
+        return Future.value("");
+      default:
+        return Future.value("");
+    }
   }
 }

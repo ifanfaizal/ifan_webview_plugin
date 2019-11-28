@@ -52,7 +52,7 @@ class _MyAppState extends State<MyApp> {
             children: <Widget>[
               RaisedButton(
                 onPressed: () async {
-                  await CustomWebviewPlugin.startWebView();
+                  await CustomWebviewPlugin.startWebView("https://smart-gps-e22ab.web.app/");
                 },
                 child: Text("OPEN WEBVIEW"),
               ),

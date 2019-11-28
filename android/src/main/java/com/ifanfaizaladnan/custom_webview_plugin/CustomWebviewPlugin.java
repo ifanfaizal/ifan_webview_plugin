@@ -14,6 +14,7 @@ public class CustomWebviewPlugin implements MethodCallHandler {
   public Activity activity;
   static MethodChannel channel;
   static WebViewManager webViewManager;
+  static String url;
   private static final String CHANNEL_NAME = "custom_webview_plugin";
 
   /** Plugin registration. */
@@ -33,8 +34,9 @@ public class CustomWebviewPlugin implements MethodCallHandler {
     if (call.method.equals("getPlatformVersion")) {
       result.success("Android " + android.os.Build.VERSION.RELEASE);
     } else if (call.method.equals("startWebView")) {
-      webViewManager.showWebViewPage();
-      result.success(null);
+        url = (String) call.arguments;
+        webViewManager.showWebViewPage();
+        result.success(null);
     } else {
       result.notImplemented();
     }

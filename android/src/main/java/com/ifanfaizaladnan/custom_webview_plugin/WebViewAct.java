@@ -29,8 +29,21 @@ public class WebViewAct extends Activity {
         WebSettings webSettings = mWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
 
+        mWebView.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(mWebView, url);
+                CustomWebviewPlugin.channel.invokeMethod("onPageFinished", url);
+            }
+
+            @Override
+            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+                Toast.makeText(getApplicationContext(), "Oh no! " + description, Toast.LENGTH_SHORT).show();
+            }
+        });
+
         mWebView.addJavascriptInterface(new WebViewJavaScriptInterface(this), "Toaster");
-        mWebView.loadUrl("https://smart-gps-e22ab.web.app/");
+        mWebView.loadUrl(CustomWebviewPlugin.url);
     }
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
