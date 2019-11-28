@@ -52,6 +52,7 @@ class _MyAppState extends State<MyApp> {
             children: <Widget>[
               RaisedButton(
                 onPressed: () async {
+                  CustomWebviewPlugin.onPageFinished = _onPageFinished;
                   await CustomWebviewPlugin.startWebView("https://smart-gps-e22ab.web.app/");
                 },
                 child: Text("OPEN WEBVIEW"),
@@ -62,5 +63,9 @@ class _MyAppState extends State<MyApp> {
         ),
       ),
     );
+  }
+
+  void _onPageFinished(String url) {
+    print("Load finish: $url");
   }
 }

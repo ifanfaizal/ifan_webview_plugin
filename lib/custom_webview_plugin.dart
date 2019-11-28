@@ -2,9 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/services.dart';
 
+typedef void PageFinishedCallback(String url);
+
 class CustomWebviewPlugin {
   static const MethodChannel _channel =
       const MethodChannel('custom_webview_plugin');
+
+  static PageFinishedCallback onPageFinished;
 
   static Future<String> get platformVersion async {
     final String version = await _channel.invokeMethod('getPlatformVersion');
@@ -19,7 +23,7 @@ class CustomWebviewPlugin {
   static Future<dynamic> _handler(MethodCall call) {
     switch (call.method) {
       case 'onPageFinished':
-        print(call.arguments);
+        onPageFinished(call.arguments);
         return Future.value("");
       default:
         return Future.value("");
