@@ -1,0 +1,7 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+  package="com.ifanfaizaladnan.custom_webview_plugin">
+
+    <application>
+        <activity android:name=".WebViewAct" />
+    </application>
+</manifest>
