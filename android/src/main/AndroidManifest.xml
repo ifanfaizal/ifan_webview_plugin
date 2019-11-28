@@ -2,6 +2,9 @@
   package="com.ifanfaizaladnan.custom_webview_plugin">
 
     <application>
-        <activity android:name=".WebViewAct" />
+        <activity
+            android:name=".WebViewAct"
+            android:theme="@android:style/Theme.Black.NoTitleBar"
+            android:hardwareAccelerated="true"/>
     </application>
 </manifest>
