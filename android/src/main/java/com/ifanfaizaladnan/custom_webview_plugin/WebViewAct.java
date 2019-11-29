@@ -65,6 +65,7 @@ public class WebViewAct extends Activity {
          */
         @JavascriptInterface
         public void postMessage(String message){
+            CustomWebviewPlugin.channel.invokeMethod("onToasterCalled", null);
             finish();
         }
     }

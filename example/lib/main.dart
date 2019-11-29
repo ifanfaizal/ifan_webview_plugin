@@ -53,6 +53,7 @@ class _MyAppState extends State<MyApp> {
               RaisedButton(
                 onPressed: () async {
                   CustomWebviewPlugin.onPageFinished = _onPageFinished;
+                  CustomWebviewPlugin.onToasterCalled = _onToasterCalled;
                   await CustomWebviewPlugin.startWebView("https://smart-gps-e22ab.web.app/");
 
                   Future.delayed(Duration(seconds: 10), () async {
@@ -71,5 +72,9 @@ class _MyAppState extends State<MyApp> {
 
   void _onPageFinished(String url) {
     print("Load finish: $url");
+  }
+
+  void _onToasterCalled() {
+    print("Toaster called");
   }
 }
