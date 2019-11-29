@@ -5,6 +5,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.webkit.JavascriptInterface;
@@ -65,7 +67,12 @@ public class WebViewAct extends Activity {
          */
         @JavascriptInterface
         public void postMessage(String message){
-            CustomWebviewPlugin.channel.invokeMethod("onToasterCalled", null);
+            mWebView.post(new Runnable() {
+                @Override
+                public void run() {
+                    CustomWebviewPlugin.channel.invokeMethod("onToasterCalled", null);
+                }
+            });
             finish();
         }
     }
