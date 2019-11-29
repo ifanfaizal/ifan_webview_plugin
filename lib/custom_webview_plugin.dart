@@ -20,6 +20,10 @@ class CustomWebviewPlugin {
     await _channel.invokeMethod('startWebView', url);
   }
 
+  static Future evalJs(String jsString) async {
+    await _channel.invokeMethod('evalJs', jsString);
+  }
+
   static Future<dynamic> _handler(MethodCall call) {
     switch (call.method) {
       case 'onPageFinished':

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.webkit.JavascriptInterface;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -17,7 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class WebViewAct extends Activity {
-    public WebView mWebView;
+    public static WebView mWebView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +30,7 @@ public class WebViewAct extends Activity {
         WebSettings webSettings = mWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
 
+        mWebView.setWebChromeClient(new WebChromeClient());
         mWebView.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(WebView view, String url) {
@@ -44,21 +46,6 @@ public class WebViewAct extends Activity {
 
         mWebView.addJavascriptInterface(new WebViewJavaScriptInterface(this), "Toaster");
         mWebView.loadUrl(CustomWebviewPlugin.url);
-    }
-
-    @TargetApi(Build.VERSION_CODES.KITKAT)
-    public void evaluateJavaScript(String jsString) {
-        if (jsString == null) {
-            throw new UnsupportedOperationException("JavaScript string cannot be null");
-        }
-        mWebView.evaluateJavascript(
-            jsString,
-            new android.webkit.ValueCallback<String>() {
-                @Override
-                public void onReceiveValue(String value) {
-                    Log.d("WebView", value);
-                }
-            });
     }
 
     public class WebViewJavaScriptInterface{

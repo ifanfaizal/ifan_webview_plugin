@@ -37,6 +37,10 @@ public class CustomWebviewPlugin implements MethodCallHandler {
         url = (String) call.arguments;
         webViewManager.showWebViewPage();
         result.success(null);
+    } else if (call.method.equals("evalJs")) {
+      String jsString = (String) call.arguments;
+      webViewManager.evalJs(jsString);
+      result.success(null);
     } else {
       result.notImplemented();
     }

@@ -54,6 +54,10 @@ class _MyAppState extends State<MyApp> {
                 onPressed: () async {
                   CustomWebviewPlugin.onPageFinished = _onPageFinished;
                   await CustomWebviewPlugin.startWebView("https://smart-gps-e22ab.web.app/");
+
+                  Future.delayed(Duration(seconds: 10), () async {
+                    await CustomWebviewPlugin.evalJs("alert('test');");
+                  });
                 },
                 child: Text("OPEN WEBVIEW"),
               ),
